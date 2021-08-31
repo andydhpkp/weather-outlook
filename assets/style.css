@@ -2,8 +2,34 @@ h2 {
     font-size: 2.75rem;
 }
 
+h3 {
+    font-size: 2.15rem;
+}
+
+h4 {
+    font-size: 1.55rem;
+}
+
+.container {
+    width: 100%;
+}
+
 .searchHistoryBtn {
     width: 100%;
     background-color: grey;
     margin-bottom: 5px;
+}
+
+.card-panel p {
+    font-size: 11px;
+}
+
+#forecastEl {
+    display: flex;
+}
+
+@media screen and (max-width: 1000px) {
+    #forecastEl {
+        display: block;
+    }
 }
