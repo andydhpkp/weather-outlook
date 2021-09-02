@@ -33,8 +33,25 @@ h4 {
     font-size: 11px;
 }
 
-.uvIndexColor {
-    background-color: green;
+.lowUV {
+    background-color: #559e58;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.moderateUV {
+    background-color: #ebe65b;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.highUV {
+    background-color: #e64747;
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #forecastEl {

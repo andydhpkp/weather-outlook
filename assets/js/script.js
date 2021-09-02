@@ -32,6 +32,8 @@ function formSubmitHandler(event) {
 
 function displayWeather(weatherData, city) {
 
+    console.log(weatherData)
+
     //display main city
     var mainCityEl = document.getElementById('cityName')
     mainCityEl.innerHTML = city + ' '
@@ -42,9 +44,12 @@ function displayWeather(weatherData, city) {
     mainDateEl.innerHTML = mainDate + ' '
 
     //display main icon
-    var mainIcon = weatherData.weather.icon;
+    var mainIcon = weatherData.weather[0].icon;
+    var mainIconImg = document.createElement('img')
     var mainIconEl = document.getElementById('dateIcon');
-    mainIconEl.innerHTML = mainIcon
+    mainIconImg.setAttribute('src', 'http://openweathermap.org/img/w/' + mainIcon + '.png')
+    mainIconEl.appendChild(mainIconImg)
+    console.log(mainIcon)
 
     //display main temp
     var mainTemp = weatherData.main.temp;
@@ -63,9 +68,6 @@ function displayWeather(weatherData, city) {
 
     //get UVIndex
     getUVIndex(weatherData.coord.lat, weatherData.coord.lon)
-
-    console.log(weatherData)
-    console.log(city)
 }
 
 function getUVIndex(lat, lon) {
@@ -79,11 +81,11 @@ function getUVIndex(lat, lon) {
                     var UVIndexEl = document.getElementById('uvIndex')
                     UVIndexEl.innerHTML = UVIndex
                     if (UVIndex <= 2) {
-                        alert('green')
+                        UVIndexEl.setAttribute('class', 'lowUV')
                     } if (UVIndex > 2 && UVIndex < 6) {
-                        alert('yellow')
+                        UVIndexEl.setAttribute('class', 'moderateUV')
                     } if (UVIndex >= 6) {
-                        alert('red')
+                        UVIndexEl.setAttribute('class', 'highUV')
                     }
                 });
             } else {
