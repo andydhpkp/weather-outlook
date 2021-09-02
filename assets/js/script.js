@@ -9,6 +9,7 @@ function citySearchFunction(city) {
         if(response.ok) {
             response.json().then(function(data) {
                 displayWeather(data, city);
+                getWeather5day(city);
             });
         } else {
             alert("Error: City Not Found");
@@ -49,7 +50,6 @@ function displayWeather(weatherData, city) {
     var mainIconEl = document.getElementById('dateIcon');
     mainIconImg.setAttribute('src', 'http://openweathermap.org/img/w/' + mainIcon + '.png')
     mainIconEl.appendChild(mainIconImg)
-    console.log(mainIcon)
 
     //display main temp
     var mainTemp = weatherData.main.temp;
@@ -94,4 +94,74 @@ function getUVIndex(lat, lon) {
         }).catch(function(error) {
             alert("Unable to connect to OpenWeather")
         })
+}
+
+function getWeather5day(cityName) {
+
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=imperial&appid=52a157ee5c11148c94d26b144b7f8358'
+    fetch(apiUrl).then(function(response) {
+        //request was successful
+        if(response.ok) {
+            response.json().then(function(data) {
+                displayWeather5day(data, cityName)
+            })
+        } else {
+            alert("Error: City Not Found");
+        }
+    }).catch(function(error) {
+        alert("Unable to connect to OpenWeather")
+    })
+}
+
+function displayWeather5day(multDayWeatherData, cityName) {
+
+    console.log(multDayWeatherData)
+
+    var listNum = 1;
+    var adjustForStartingDay = 0;
+    var date = moment().format('MM/DD/YYYY')
+
+    for (i = 3; i <= 40; i = i + 9) {
+
+        var stringId = listNum.toString()
+        var dateId = stringId + 'DateForecast'
+        var iconId = stringId + 'IconForecast'
+        var tempId = stringId + 'TempForecast'
+        var windId = stringId + 'WindForecast'
+        var humidId = stringId + 'HumidForecast'
+
+        //display dates
+        var newDate = moment(date, 'MM/DD/YYYY').add(adjustForStartingDay, 'days');
+        var dateEl = document.getElementById(dateId)
+        dateEl.innerHTML = newDate
+        
+        //display icons
+        var dayIcon = multDayWeatherData.list[i].weather[0].icon;
+        var dayIconImg = document.createElement('img')
+        var dayIconEl = document.getElementById(iconId);
+        dayIconImg.setAttribute('src', 'http://openweathermap.org/img/w/' + dayIcon + '.png')
+        dayIconEl.appendChild(dayIconImg)
+
+        //display temps
+        var forecastTemp = multDayWeatherData.list[i].main.temp;
+        var forecastTempEl = document.getElementById(tempId);
+        forecastTempEl.innerHTML = forecastTemp + '&#8457;'
+
+
+        //display wind speed
+        var forecastWindSpeed = multDayWeatherData.list[i].wind.speed;
+        var forecastWindSpeedEl = document.getElementById(windId);
+        forecastWindSpeedEl.innerHTML = forecastWindSpeed + ' MPH'
+
+        //display humidity
+        var forecastHumidity = multDayWeatherData.list[i].main.humidity;
+        var forecastHumidityEl = document.getElementById(humidId);
+        forecastHumidityEl.innerHTML = forecastHumidity + '%'
+
+        listNum++;
+        adjustForStartingDay++;
+    }
+
+    console.log(multDayWeatherData)
+    console.log(cityName)
 }
