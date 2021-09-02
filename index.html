@@ -14,9 +14,10 @@
         </div>
       </nav>
     <div class="container">
+      <!-- Search for city -->
         <div class="row">
             
-            <form class="col s10 m4 l3" autocomplete="off" onsubmit="return citySearchFunction()">
+            <form class="col s10 m4 l3" autocomplete="off" onsubmit="formSubmitHandler(event)">
                 <h2>Search For City:</h2>
                 <div class="row">
                     <div class="input-field col s12">
@@ -26,6 +27,7 @@
                         
                     </div>
                 </div>
+                <!-- Recent history buttons -->
                 <div class="row">
                     <div class="col s12">
                         <a class="waves-effect btn searchHistoryBtn">button</a>
@@ -45,24 +47,26 @@
                 </div>
             </form>
 
+            <!-- Current city weather info display -->
             <div class="col s12 m8 l9">
                 <div class="row">
                     <div class="col s12">
-                        <h2 id="cityName">Example City <span id="date">Date</span><i id="dateIcon"> ICON</i></h2>
+                        <h2><span id="cityName"></span><span id="date"></span><i id="dateIcon"></i></h2>
                     </div>
                     <div class="col s12">
-                        <p> Temp: <span id="temperature">50</span>&#8457;</p>
+                        <p>Temp: <span id="temperature"></span></p>
                     </div>
                     <div class="col s12">
-                        <p>Humidity: <span id="humidity">55</span>%</p>
+                        <p>Humidity: <span id="humidity"></span></p>
                     </div>
                     <div class="col s12">
-                        <p>Wind Speed: <span id="windSpeed">50</span> MPH</p>
+                        <p>Wind Speed: <span id="windSpeed"></span></p>
                     </div>
                     <div class="col s12">
-                        <p>UV Index: <span id="uvIndex">40 gyr</span></p>
+                        <p>UV Index: <span id="uvIndex" class="uvIndexColor"></span></p>
                     </div>
                 </div>
+                <!-- 5-day forecast -->
                 <div class="row">
                     <h3>5-Day Forecast:</h3>
                     <div id="forecastEl">
@@ -127,5 +131,6 @@
     </div>
     
     <script src="./assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

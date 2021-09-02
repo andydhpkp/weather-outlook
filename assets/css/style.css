@@ -33,6 +33,10 @@ h4 {
     font-size: 11px;
 }
 
+.uvIndexColor {
+    background-color: green;
+}
+
 #forecastEl {
     display: flex;
 }
