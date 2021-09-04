@@ -202,3 +202,17 @@ function saveSearch(city) {
 
 
 }
+
+function loadSavedCities() {
+    
+    for (i = 1; i < 6; i++) {
+        var city = localStorage.getItem(i)
+        var idString = i.toString() + 'recentHistory'
+
+        var historyButton = document.getElementById(idString)
+        historyButton.setAttribute('onclick', `citySearchFunction('${city}')`)
+        historyButton.innerHTML = city;
+    }
+}
+
+loadSavedCities()

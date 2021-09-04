@@ -1,8 +1,10 @@
 # Weather Outlook
 ## Description
-An application that allows you to see the weather outlook for multiple cities
+An application that allows you to see the weather outlook for multiple cities. It saves the five recent searches as buttons to be used as a quick reference.
+## Usage
+Type desired city into search bar and submit input. The current weather will display on the right side of the page, and a 5-day forecast for noon each day will appear below. Recent searches will appear on the buttons below the submit input, and can be clicked to display current weather for that city.
 ## Goals
-- A weather dashboard with form inputs
+ - A weather dashboard with form inputs
     - Search for a city to display viewing options
         - One display:
             - City name
@@ -26,5 +28,7 @@ An application that allows you to see the weather outlook for multiple cities
     - Add to the search history
         - Display history as buttons 
             - Display as if that city was searched
+
+
 ## Deployment Link
 https://andydhpkp.github.io/weather-outlook/
