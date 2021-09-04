@@ -182,12 +182,6 @@ function loadCity(city) {
 
 function saveSearch(city) {
 
-    /* for(i = 0; i < 5; i++) {
-        if(city === localStorage.getItem(i)) {
-            return;
-        }
-    } */
-
     if(saveHistory > 5) {
         saveHistory = 1;
     }
