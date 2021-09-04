@@ -1,5 +1,25 @@
 var cityInputEl = document.querySelector('#citySearch');
 
+//first save to local storage
+var saveHistory = 1;
+
+//display date
+var mainDate = moment()
+var mainDateEl = document.getElementById('date')
+mainDateEl.innerHTML = mainDate.format('MM/DD/YYYY') + ' '
+
+//adjust for starting date and id's
+var adjustForDate = 1;
+//display 5-day dates
+for (i = 0; i < 5; i++) {
+    
+    var dateId = adjustForDate.toString() + 'DateForecast'
+    var newDate = moment().add(i, 'days');
+    var dateEl = document.getElementById(dateId);
+    dateEl.innerHTML = newDate.format('MM/DD/YYYY');
+    adjustForDate++;
+    console.log(adjustForDate)
+}
 
 function citySearchFunction(city) {
     //format the api url
@@ -10,6 +30,7 @@ function citySearchFunction(city) {
             response.json().then(function(data) {
                 displayWeather(data, city);
                 getWeather5day(city);
+                saveSearch(city);
             });
         } else {
             alert("Error: City Not Found");
@@ -39,15 +60,11 @@ function displayWeather(weatherData, city) {
     var mainCityEl = document.getElementById('cityName')
     mainCityEl.innerHTML = city + ' '
 
-    //display date
-    var mainDate = moment().format('MM/DD/YYYY')
-    var mainDateEl = document.getElementById('date')
-    mainDateEl.innerHTML = mainDate + ' '
-
     //display main icon
     var mainIcon = weatherData.weather[0].icon;
-    var mainIconImg = document.createElement('img')
     var mainIconEl = document.getElementById('dateIcon');
+    var mainIconImg = document.createElement('img')
+    mainIconEl.innerHTML = ''
     mainIconImg.setAttribute('src', 'http://openweathermap.org/img/w/' + mainIcon + '.png')
     mainIconEl.appendChild(mainIconImg)
 
@@ -118,27 +135,20 @@ function displayWeather5day(multDayWeatherData, cityName) {
     console.log(multDayWeatherData)
 
     var listNum = 1;
-    var adjustForStartingDay = 0;
-    var date = moment().format('MM/DD/YYYY')
 
     for (i = 3; i <= 40; i = i + 9) {
 
         var stringId = listNum.toString()
-        var dateId = stringId + 'DateForecast'
         var iconId = stringId + 'IconForecast'
         var tempId = stringId + 'TempForecast'
         var windId = stringId + 'WindForecast'
         var humidId = stringId + 'HumidForecast'
-
-        //display dates
-        var newDate = moment(date, 'MM/DD/YYYY').add(adjustForStartingDay, 'days');
-        var dateEl = document.getElementById(dateId)
-        dateEl.innerHTML = newDate
         
         //display icons
         var dayIcon = multDayWeatherData.list[i].weather[0].icon;
         var dayIconImg = document.createElement('img')
         var dayIconEl = document.getElementById(iconId);
+        dayIconEl.innerHTML = ''
         dayIconImg.setAttribute('src', 'http://openweathermap.org/img/w/' + dayIcon + '.png')
         dayIconEl.appendChild(dayIconImg)
 
@@ -156,12 +166,44 @@ function displayWeather5day(multDayWeatherData, cityName) {
         //display humidity
         var forecastHumidity = multDayWeatherData.list[i].main.humidity;
         var forecastHumidityEl = document.getElementById(humidId);
-        forecastHumidityEl.innerHTML = forecastHumidity + '%'
+        forecastHumidityEl.innerHTML = forecastHumidity + ' %'
 
         listNum++;
-        adjustForStartingDay++;
     }
 
     console.log(multDayWeatherData)
     console.log(cityName)
+}
+
+function loadCity(city) {
+    var citySearchName = localStorage.getItem(city)
+    citySearchFunction(city)
+}
+
+function saveSearch(city) {
+
+    /* for(i = 0; i < 5; i++) {
+        if(city === localStorage.getItem(i)) {
+            return;
+        }
+    } */
+
+    if(saveHistory > 5) {
+        saveHistory = 1;
+    }
+
+    localStorage.setItem(saveHistory, city)
+    var searchedCity = localStorage.getItem(saveHistory)
+    console.log('searchedCity = ' + searchedCity)
+    console.log('city is ' + city)
+
+    var idString = saveHistory.toString() + 'recentHistory'
+
+    var historyButton = document.getElementById(idString)
+    historyButton.setAttribute('onclick', `citySearchFunction('${searchedCity}')`)
+    historyButton.innerHTML = searchedCity;
+
+    saveHistory++;
+
+
 }
