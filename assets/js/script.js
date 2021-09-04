@@ -1,4 +1,5 @@
 var cityInputEl = document.querySelector('#citySearch');
+var key = config.apiKey;
 
 //first save to local storage
 var saveHistory = 1;
@@ -23,7 +24,7 @@ for (i = 0; i < 5; i++) {
 
 function citySearchFunction(city) {
     //format the api url
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=52a157ee5c11148c94d26b144b7f8358'
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=' + key
     fetch(apiUrl).then(function(response) {
         //request was successful
         if(response.ok) {
@@ -89,7 +90,7 @@ function displayWeather(weatherData, city) {
 
 function getUVIndex(lat, lon) {
         //format the api url
-        var apiUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=minutely,hourly,daily,alerts&appid=52a157ee5c11148c94d26b144b7f8358'
+        var apiUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=minutely,hourly,daily,alerts&appid=' + key
         fetch(apiUrl).then(function(response) {
             //request was successful
             if(response.ok) {
@@ -115,7 +116,7 @@ function getUVIndex(lat, lon) {
 
 function getWeather5day(cityName) {
 
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=imperial&appid=52a157ee5c11148c94d26b144b7f8358'
+    var apiUrl = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&units=imperial&appid=' + key
     fetch(apiUrl).then(function(response) {
         //request was successful
         if(response.ok) {
